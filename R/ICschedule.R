@@ -46,6 +46,7 @@ ICSchedule <- function(n,shape, scale, pc, visits, p, X = as.matrix(0), beta = a
   for (i in 1:n){
     occurance <- rbinom(nvisits,1,p)
     auxvisits <- c(0,visits[occurance == 0])
+    auxvisits <- auxvisits[complete.cases(auxvisits)]
     nvisits <- length(auxvisits)
     if(t[i] > max(auxvisits)){
       L[i] <- max(auxvisits)
