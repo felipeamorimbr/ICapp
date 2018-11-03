@@ -6,7 +6,7 @@
 
 
 
-ricI <- function(n,shape, scale, pc, max, X = as.matrix(0), beta = as.matrix(0)){
+ricI <- function(n,shape, scale, pc, X = as.matrix(0), beta = as.matrix(0)){
   X <- as.matrix(X)
   beta <- as.matrix(beta)
   #CHECAGENS
@@ -18,8 +18,6 @@ ricI <- function(n,shape, scale, pc, max, X = as.matrix(0), beta = as.matrix(0))
   if(shape < 0) stop('"shape" must be greater than or equal to zero')
   if(!is.numeric(pc)) stop('"pc" must be numeric')
   if(pc > 1 | pc < 0) stop('"pc" must be greater than zero and less than 1')
-  if(!is.numeric(max)) stop('"h" must be numeric')
-  if(max < 0) stop('"h" must be greater than zero')
   if(!all(X == 0) & nrow(X) != n) stop('Number of observations of "x" must be the
                                        same number of observations
                                        random generated')
@@ -28,8 +26,9 @@ ricI <- function(n,shape, scale, pc, max, X = as.matrix(0), beta = as.matrix(0))
   if(any(!is.numeric(X))) stop('"x" must be numeric')
   if(any(!is.numeric(beta))) stop('"beta" must be numeric')
   # generating times from the following Weibull distribution:
-  u <- runif(n, min = 0, max = max)
   lambda <- scale*exp(X%*%beta)
+  gama <- pc*lambda/(1-pc)
+  u <- rweibull(n, shape = shape, scale = gama)
   tau <- qweibull(rep(pc,n), shape = shape, scale = lambda)
   t <- rweibull(n, shape = shape, scale = lambda)
 
