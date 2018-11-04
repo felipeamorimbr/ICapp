@@ -52,10 +52,10 @@ R[delta==1] <- tau[delta == 1]
 
 delta <-as.numeric(tau<t)
 R[delta==1] <- Inf
-cens <- rep(0,n)
-cens[delta != 1] <- 3
+event <- rep(0,n)
+event[delta != 1] <- 3
 y <- cbind(L, R)
-dados<-data.frame(y,cens, X)
+dados<-data.frame(y,event, X)
 return(dados)
 }
 
