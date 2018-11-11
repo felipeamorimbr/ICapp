@@ -32,12 +32,12 @@ ricI <- function(n,shape, scale, pc, X = as.matrix(0), beta = as.matrix(0)){
   tau <- qweibull(rep(pc,n), shape = shape, scale = lambda)
   t <- rweibull(n, shape = shape, scale = lambda)
 
-  delta <- rep(1,n)
+  event <- rep(2,n)
   for(i in 1:n){
     if(t[i] > u[i]){
-      delta[i] <- 0
+      event[i] <- 0
     }
   }
-  dados <- data.frame(t,delta,X)
+  dados <- data.frame(t,event,X)
   return(dados)
 }

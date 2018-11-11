@@ -7,7 +7,7 @@
 
 
 
-ICSchedule <- function(n,shape, scale, pc, visits, p, X = as.matrix(0), beta = as.matrix(0)){
+ICSchedule <- function(n,shape, scale, visits, p, X = as.matrix(0), beta = as.matrix(0)){
   X <- as.matrix(X)
   beta <- as.matrix(beta)
   visits <- as.vector(visits)
@@ -18,8 +18,6 @@ ICSchedule <- function(n,shape, scale, pc, visits, p, X = as.matrix(0), beta = a
   if(scale < 0) stop('"scale" must be greater than or equal to zero')
   if(!is.numeric(shape)) stop('"shape" must be numeric')
   if(shape < 0) stop('"shape" must be greater than or equal to zero')
-  if(!is.numeric(pc)) stop('"pc" must be numeric')
-  if(pc > 1 | pc < 0) stop('"pc" must be greater than zero and less than 1')
   if(!all(visits > 0)) stop('"visits" all visits times must be greater than zero')
   if(!is.numeric((visits))) stop('"visits" must be numeric')
   if(p > 1 | p < 0) stop('"p" must be greater than zero and less than 1')
@@ -32,7 +30,6 @@ ICSchedule <- function(n,shape, scale, pc, visits, p, X = as.matrix(0), beta = a
   if(any(!is.numeric(X))) stop('"x" must be numeric')
   if(any(!is.numeric(beta))) stop('"beta" must be numeric')
   # generating times from the following Weibull distribution:
-  u <- runif(n)
   lambda <- scale*exp(X%*%beta)
   t <- rweibull(n, shape = shape, scale = lambda)
   visits <- visits[order(visits)]
@@ -56,8 +53,11 @@ ICSchedule <- function(n,shape, scale, pc, visits, p, X = as.matrix(0), beta = a
       R[i] <- min(auxvisits[auxvisits >= t[i]])
     }
   }
+  event <- rep(0,n)
+  event[R != Inf] <- 3
+  event[L == 0] <- 2
   y <- cbind(L, R)
-  dados<-data.frame(y,X)
+  dados<-data.frame(y,event,X)
   return(dados)
 }
 
