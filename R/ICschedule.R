@@ -53,11 +53,9 @@ ICSchedule <- function(n,shape, scale, visits, p, X = as.matrix(0), beta = as.ma
       R[i] <- min(auxvisits[auxvisits >= t[i]])
     }
   }
-  event <- rep(0,n)
-  event[R != Inf] <- 3
-  event[L == 0] <- 2
+  L[L == 0] <- -Inf
   y <- cbind(L, R)
-  dados<-data.frame(y,event,X)
+  dados<-data.frame(y,X)
   return(dados)
 }
 
