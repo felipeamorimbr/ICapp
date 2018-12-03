@@ -8,7 +8,6 @@
 
 
 ICSimple <- function(n,shape, scale, pc, h, X = as.matrix(0), beta = as.matrix(0)){
-  pc <- 1-pc
   X <- as.matrix(X)
   beta <- as.matrix(beta)
   #CHECAGENS
@@ -32,7 +31,7 @@ ICSimple <- function(n,shape, scale, pc, h, X = as.matrix(0), beta = as.matrix(0
   # generating times from the following Weibull distribution:
   u <- runif(n)
   lambda <- scale*exp(X%*%beta)
-  tau <- qweibull(rep(pc,n), shape = shape, scale = lambda)
+  tau <- qweibull(rep(1-pc,n), shape = shape, scale = lambda)
   t <- rweibull(n, shape = shape, scale = lambda)
 
 
@@ -53,6 +52,7 @@ ICSimple <- function(n,shape, scale, pc, h, X = as.matrix(0), beta = as.matrix(0
 
   delta <-as.numeric(tau<t)
   R[delta==1] <- Inf
+  L[L == 0] <- -Inf
   event <- rep(0,n)
   event[delta != 1] <- 3
   y <- cbind(L, R)
