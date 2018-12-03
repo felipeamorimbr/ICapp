@@ -35,6 +35,7 @@ ricI <- function(n,shape, scale, pc, X = as.matrix(0), beta = as.matrix(0)){
   for(i in 1:n){
     if(t[i] >= u[i]){
       R[i] <- Inf
+      L[i] <- t[i]
     }else{
       R[i] <- t[i]
     }
