@@ -9,7 +9,6 @@
 ricI <- function(n,shape, scale, pc, X = as.matrix(0), beta = as.matrix(0)){
   X <- as.matrix(X)
   beta <- as.matrix(beta)
-  #CHECAGENS
   if(!is.numeric(n)) stop('"n" must be  numeric')
   if(n < 0) stop('"n" must be greater than or equal to zero')
   if(!is.numeric(scale)) stop('"scale" must be numeric')
@@ -27,9 +26,8 @@ ricI <- function(n,shape, scale, pc, X = as.matrix(0), beta = as.matrix(0)){
   if(any(!is.numeric(beta))) stop('"beta" must be numeric')
   # generating times from the following Weibull distribution:
   lambda <- scale*exp(X%*%beta)
-  gama <- pc*lambda/(1-pc)
+  gama <- (1-pc)*lambda/(pc)
   u <- rweibull(n, shape = shape, scale = gama)
-  tau <- qweibull(rep(pc,n), shape = shape, scale = lambda)
   t <- rweibull(n, shape = shape, scale = lambda)
 
   L <- rep(-Inf,n)
