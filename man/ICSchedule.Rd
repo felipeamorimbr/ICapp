@@ -4,7 +4,7 @@
 \alias{ICSchedule}
 \title{Generates interval-censored Failure Time data with schedule visits}
 \usage{
-ICSchedule(n, shape, scale, pc, visits, p, X = as.matrix(0),
+ICSchedule(n, shape, scale, visits, p, X = as.matrix(0),
   beta = as.matrix(0))
 }
 \description{

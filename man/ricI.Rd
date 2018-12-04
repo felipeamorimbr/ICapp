@@ -4,7 +4,7 @@
 \alias{ricI}
 \title{Generates Case II interval-censored Failure Time data}
 \usage{
-ricI(n, shape, scale, pc, max, X = as.matrix(0), beta = as.matrix(0))
+ricI(n, shape, scale, pc, X = as.matrix(0), beta = as.matrix(0))
 }
 \description{
 Generates Case II interval-censored Failure Time data

@@ -2,12 +2,14 @@
 % Please edit documentation in R/ICsimple.R
 \name{ICSimple}
 \alias{ICSimple}
-\title{Generates Case II interval-censored Failure Time data}
+\title{Generates Case II interval-censored Failure Time data
+\code{teste}}
 \usage{
 ICSimple(n, shape, scale, pc, h, X = as.matrix(0), beta = as.matrix(0))
 }
 \description{
 Generates Case II interval-censored Failure Time data
+\code{teste}
 }
 \examples{
 ICsimple(50,0.8,0.8)

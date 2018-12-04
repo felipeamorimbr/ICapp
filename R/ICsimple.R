@@ -1,5 +1,5 @@
 #'Generates Case II interval-censored Failure Time data
-#'
+#'\code{teste}
 #'
 #'@keywords interval censored
 #'@examples
