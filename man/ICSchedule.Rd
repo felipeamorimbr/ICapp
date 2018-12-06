@@ -19,7 +19,7 @@ ICSchedule(n, shape, scale, visits, p, X = as.matrix(0),
 
 \item{p}{the probability of a observation fail each visit}
 
-\item{X}{the vector with the values of covariates. The number of rows of \code{X} must be equal \code{n}}
+\item{X}{the matrix with the values of covariates. The number of rows of \code{X} must be equal \code{n}}
 
 \item{beta}{the vector with the value of the regression coefficients. The lenght of \code{beta} must be equal the number of covariaties}
 }
