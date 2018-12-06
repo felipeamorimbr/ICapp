@@ -1,12 +1,24 @@
-#'Generates Case II interval-censored Failure Time data
-#'\code{teste}
+#'Generates Case II interval-Censored Failure Time data
+#'
+#'The \code{ICSimple} generates case II interval-censored failure time data. The failure
+#'time follows the Weibull regression model
+#'
+#'First the function generates the failure time using [rweibull()]. The \code{shape}
+#'is the same and the second parameter is lambda. Lambda is equal to:
+#'\deqn{lambda = scale x exp(X*beta)
+#'
+#'@param n number of observations to be generated
+#'@param shape the first parameter of Weibull distribution
+#'@param scale the second parameter of Weibull distribution
+#'@param pc the proportion of right-censored expected in the sample
+#'@param h the maximum of time between the intervals
+#'@param X the vector with the values of covariates. The number of rows of \code{X} must be equal \code{n}
+#'@param beta the vector with the value of the regression coefficients. The lenght of \code{beta} must be equal \code{n}
+#'
 #'
 #'@keywords interval censored
 #'@examples
 #'ICsimple(50,0.8,0.8)
-
-
-
 ICSimple <- function(n,shape, scale, pc, h, X = as.matrix(0), beta = as.matrix(0)){
   X <- as.matrix(X)
   beta <- as.matrix(beta)

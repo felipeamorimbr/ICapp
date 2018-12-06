@@ -2,14 +2,44 @@
 % Please edit documentation in R/ICsimple.R
 \name{ICSimple}
 \alias{ICSimple}
-\title{Generates Case II interval-censored Failure Time data
-\code{teste}}
+\title{Generates Case II interval-Censored Failure Time data}
 \usage{
 ICSimple(n, shape, scale, pc, h, X = as.matrix(0), beta = as.matrix(0))
 }
+\arguments{
+\item{n}{number of observations to be generated}
+
+\item{shape}{the shape parameter of Weibull distribution}
+
+\item{scale}{the scale parameter of Weibull distribution}
+
+\item{pc}{the proportion of right-censored expected in the sample}
+
+\item{h}{the maximum of time between the intervals}
+
+\item{X}{the vector with the values of covariates. The number of rows of \code{X} must be equal \code{n}}
+
+\item{beta}{the vector with the value of the regression coefficients. The lenght of \code{beta} must be equal the number of covariaties}
+}
+
 \description{
-Generates Case II interval-censored Failure Time data
-\code{teste}
+The \code{ICSimple} generates case II interval-censored failure time data. The failure
+time follows the Weibull regression model
+}
+\details{
+First the function generates the failure time using [rweibull()]. The \code{shape} is the same and the second parameter is lambda. Lambda is equal to:
+
+\deqn{lambda = scale*exp(X*beta)}
+
+If there is no value to \code{X} and \code{beta} \eqn{lambda = scale}
+Then the function generates the quantiles, the final time of each observattion. If the failure time is greater than the final time, the time is right-censored. The final time is generated using [qweibull()] with \code{shape} and lambda. The probability is \eqn{1 - pc}. That way, is expected that proportion of right-censored observation be \code{pc}. Now is generated the time of visits, they are generated using the function [runif(0,2*h)]. They are generated while the time of visits are less than the minimum of the failure time and the final time. Then is selected first and second time interval of each observation. If the failure time is greater than final time, the first time of the interval is the bigger time of visit and the second time is [Inf]. If the failure time is less than final time, the second time of the interval is the bigger visit time and the first time of the interval is the second bigger visit time.
+}
+\value{
+The function return a data.frame on what:
+\item{L}{the lower limit of the interval generated}
+\item{R}{the upper limit of the interval generated}
+\item{event}{the indicator of interval censored data in the same way that is used in [Surv()] function from \code{survival} package.}
+\item{X}{the value of the covariates}
 }
 \examples{
 ICsimple(50,0.8,0.8)

@@ -7,11 +7,46 @@
 ICSchedule(n, shape, scale, visits, p, X = as.matrix(0),
   beta = as.matrix(0))
 }
+
+\arguments{
+\item{n}{number of observations to be generated}
+
+\item{shape}{the shape parameter of Weibull distribution}
+
+\item{scale}{the scale parameter of Weibull distribution}
+
+\item{visits}{the vector with the time of visits}
+
+\item{p}{the probability of a observation fail each visit}
+
+\item{X}{the vector with the values of covariates. The number of rows of \code{X} must be equal \code{n}}
+
+\item{beta}{the vector with the value of the regression coefficients. The lenght of \code{beta} must be equal the number of covariaties}
+}
+
 \description{
-Generates interval-censored Failure Time data with schedule visits
+Generates interval-censored Failure Time data with schedule visits. The failure
+time follows the Weibull regression model
 }
+
+\details{
+First the function generates the failure time using [rweibull()]. The \code{shape} is the same and the second parameter is lambda. Lambda is equal to:
+
+\deqn{lambda = scale*exp(X*beta)}
+
+If there is no value to \code{X} and \code{beta} \eqn{lambda = scale}. Then is generated from the function [rbinom()] for each observation to know what visits really happened. Then is created the vector with the result. If the failure time is greater than the maximum of the visited time the, the first time of that observation is the maximum of the time visited, the second time is [Inf] and the failure time is right-censored. If the failure time less than the minimum of the visited times, the first time of that observation is [-Inf], the second time is the minimum of the visited time and the failured time is left-censored. Orthewise the failure time is between two visited times, than the first time and second time are these visited times and the failure is interval-censored.}
+
+\value{
+The function return a data.frame on what:
+\item{L}{the lower limit of the interval generated}
+\item{R}{the upper limit of the interval generated}
+\item{event}{the indicator of interval censored data in the same way that is used in [Surv()] function from \code{survival} package.}
+\item{X}{the value of the covariates}
+}
+
 \examples{
-ICsimple(50,0.8,0.8)
+ICSchedule(n = 50, shape = 2, scale = 2, visits = c(1,2,3,4), p = 0.1)
 }
+
 \keyword{censored}
 \keyword{interval}

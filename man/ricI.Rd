@@ -2,15 +2,50 @@
 % Please edit documentation in R/ricI.R
 \name{ricI}
 \alias{ricI}
-\title{Generates Case II interval-censored Failure Time data}
+\title{Generates Case I interval-censored Failure Time data}
 \usage{
 ricI(n, shape, scale, pc, X = as.matrix(0), beta = as.matrix(0))
 }
-\description{
-Generates Case II interval-censored Failure Time data
+
+\arguments{
+\item{n}{number of observations to be generated}
+
+\item{shape}{the shape parameter of Weibull distribution}
+
+\item{scale}{the scale parameter of Weibull distribution}
+
+\item{pc}{the proportion of right-censored expected in the sample}
+
+\item{X}{the matrix with the values of covariates. The number of rows of \code{X} must be equal \code{n}}
+
+\item{beta}{the vector with the value of the regression coefficients. The lenght of \code{beta} must be equal the number of covariaties}
 }
+
+\description{
+Generates Case I interval-censored Failure Time data as know as current status data. The failure time follows the Weibull regression model.
+}
+
+\details{
+First the function generates the failure time using [rweibull()]. The \code{shape} is the same and the second parameter is lambda. Lambda is equal to:
+
+\deqn{lambda = scale*exp(X*beta)}
+
+If there is no value to \code{X} and \code{beta} \eqn{lambda = scale}. Then is generated the only visit time. The shape is the same and the second parameter is gamma. Gamma is equal to:
+
+\deqn{gamma = (1-pc)*lambda/(pc)}
+
+Then the is created the values of the intervals. If the failure time is greater then the visited time, the first time is the visited time, the second time is [Inf] and the failure time is right-censored. Orthewise the first time is [-Inf] , the second is the visited time and the visited time is left-censored.
+}
+
+\value{
+The function return a data.frame on what:
+\item{L}{the lower limit of the interval generated}
+\item{R}{the upper limit of the interval generated}
+\item{X}{the value of the covariates}
+}
+
 \examples{
-ICsimple(50,0.8,0.8)
+ricI(50,2,2,0.5)
 }
 \keyword{censored}
 \keyword{interval}
